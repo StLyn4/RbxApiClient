@@ -17,13 +17,21 @@
 ## Install
 
 ```sh
-yarn install --ignore-scripts
+yarn install rbx-api-client
+```
+or
+```sh
+npm install rbx-api-client
 ```
 
 ## Usage
 
 ```sh
 yarn run build
+```
+or
+```sh
+npm run build
 ```
 
 ## Readme
