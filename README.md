@@ -1,7 +1,7 @@
 <h1 align="center">Welcome to Roblox API Client 👋</h1>
 <p>
-  <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
-  <a href="https://github.com/StLyn4/RbxApiClient#readme" target="_blank">
+  <img alt="Version" src="https://img.shields.io/badge/version-1.1.1-blue.svg?cacheSeconds=2592000" />
+  <a href="https://github.com/StLyn4/RbxApiClient#tutorial" target="_blank">
     <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
   </a>
   <a href="https://github.com/StLyn4/RbxApiClient/graphs/commit-activity" target="_blank">
@@ -34,7 +34,7 @@ or
 npm run build
 ```
 
-## Readme
+## Tutorial
 
 ```JavaScript
 // Importing an asynchronous factory
