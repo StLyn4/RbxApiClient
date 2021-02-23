@@ -1,6 +1,6 @@
 {
   "name": "rbx-api-client",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Library for working with Roblox Web API, contains a tool for the automatic construction of documented functions",
   "keywords": [
     "roblox",
@@ -27,7 +27,7 @@
   "license": "MIT",
   "scripts": {
     "build": "node build.js",
-    "postinstall": "node build.js && rimraf build.js && npm uninstall axios-concurrency js-beautify rimraf"
+    "postinstall": "node postinstall.js"
   },
   "dependencies": {
     "axios": "^0.21.1",

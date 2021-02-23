@@ -11,7 +11,7 @@ When contributing to this repository, please first discuss the change you wish t
 
 ## Setting Up the project locally
 
-To install the project you need to have `node` and `yarn`
+To install the project you need to have `node` and `yarn` (can be replaced by NPM).
 
 1.  [Fork](https://help.github.com/articles/fork-a-repo/) the project, clone
     your fork:
@@ -24,11 +24,13 @@ To install the project you need to have `node` and `yarn`
     cd RbxApiClient
     ```
 
-2.  from the root of the project: `yarn install --ignore-scripts` to install all dependencies without executing the postinstall script.
+2. Create a `.dev` file in the root of the project. It is necessary so that `postinstall` doesn't invoke automatic rebuild of the API and the removal of the build script.
+
+3.  from the root of the project: `yarn install` to install all dependencies.
 
     - make sure you have latest `yarn` version
 
-3.  from the root of the project: `yarn run build` to build the API.
+4.  from the root of the project: `yarn run build` to build the API.
 
 > Tip: Keep your `master` branch pointing at the original repository and make
 > pull requests from branches on your fork. To do this, run:

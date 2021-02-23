@@ -6,3 +6,6 @@ yarn-error.log
 # Generated API
 dist/apis
 dist/index.js
+
+# Dev flag
+.dev

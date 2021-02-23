@@ -39,7 +39,7 @@ async function fetchApiList() {
   ];
 
   const sources = [
-    {
+    /*{ // Disabled due to unavailability :(
       link: 'https://api.roblox.com/docs?useConsolidatedPage=true',
       parser: html => {
         // We are looking for Roblox.EnvironmentUrls = {...} in the code,
@@ -47,7 +47,7 @@ async function fetchApiList() {
         const matches = html.match(/Roblox\.EnvironmentUrls = (\{.*?\})/);
         return Object.keys(JSON.parse(matches[1]));
       }
-    },
+    },*/
     {
       link: 'https://devforum.roblox.com/t/collected-list-of-apis/557091',
       parser: html => {
@@ -397,10 +397,6 @@ function buildMethodName(apiClassName, path) {
                     .filter(part => {
                       return !/^v(\d|.)+$/.test(part) && !/^\{.*?\}$/.test(part);
                     });
-
-  if (apiClassName === 'Games') {
-    console.log(path, path.split(/-|\//), parts);
-  }
 
   for (let part of parts) {
     // If the first word is the name of the class, then we ignore it
