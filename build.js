@@ -2,11 +2,11 @@
 // Why is the script executed on the user side and not the author?
 // The reason is simple - always up-to-date API.
 
-import fs from 'fs';
-import axios from 'axios';
-import rimraf from 'rimraf';
-import beautify from 'js-beautify';
-import { ConcurrencyManager } from 'axios-concurrency';
+const fs = require('fs');
+const axios = require('axios');
+const rimraf = require('rimraf');
+const beautify = require('js-beautify');
+const { ConcurrencyManager } = require('axios-concurrency');
 
 // How many web requests can occur simultaneously.
 // It is not recommended to set too high a value because it will affect stability
@@ -156,8 +156,7 @@ async function createAPIClasses(name, data) {
         }
 
         /** ${data.meta.name}: ${data.meta.description} */
-        export default class ${name}_${version.replace(/\.0$/, '').replace(/\./g, '_')} {
-
+        class ${name}_${version.replace(/\.0$/, '').replace(/\./g, '_')} {
           /**
            * Create endpoint class representation and bind axios client
            * @param {AxiosInstance} client Client for web requests.
@@ -168,6 +167,8 @@ async function createAPIClasses(name, data) {
 
           ${methods.join('\n\n')}
         }
+
+        module.exports = ${name}_${version.replace(/\.0$/, '').replace(/\./g, '_')};
         `, { indent_size: 2 }
       )
     )
@@ -183,7 +184,7 @@ async function createIndex(apis) {
     `./dist/index.js`,
     beautify(
       `// Automatically generated (Vsevolod Volkov ${currentYear}©)
-      import createClient from './client';
+      const createClient = require('./client');
 
       ${Object.entries(apis).map(([name, data]) => {
         // Note: data.versions[version] points to a list of methods
@@ -192,7 +193,7 @@ async function createIndex(apis) {
           .sort()
           .map(version => version.replace(/\.0$/, '').replace(/\./g, '_'))
           .map(version => {
-            return `import ${name}_${version} from './apis/${name}_${version}.js';`;
+            return `const ${name}_${version} = require('./apis/${name}_${version}');`;
           }).join('\n');
       }).join('')}
 
@@ -249,7 +250,7 @@ async function createIndex(apis) {
         return RBXClient;
       };
 
-      export default createRBXClient;
+      module.exports = createRBXClient;
       `, { indent_size: 2 }
     )
   )

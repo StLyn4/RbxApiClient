@@ -1,5 +1,5 @@
-import axios from 'axios';
-import qs from 'qs';
+const axios = require('axios');
+const qs = require('qs');
 
 // URL (POST-method) from which the X-CSRF token will be taken
 const XCSRFEndpoint = 'https://auth.roblox.com/v2/logout';
@@ -53,10 +53,10 @@ const createClient = (token, onTokenExpired) => {
           }
         }
       }
-    }
-    const errors = err.response.data.errors;
-    if (errors && errors.length) {
-      err.message = `${err.message}: ${errors[0].message}`;
+      const errors = err.response.data.errors;
+      if (errors && errors.length) {
+        err.message = `${err.message}: ${errors[0].message}`;
+      }
     }
     return Promise.reject(err);
   });
@@ -64,4 +64,4 @@ const createClient = (token, onTokenExpired) => {
   return client;
 };
 
-export default createClient;
+module.exports = createClient;
