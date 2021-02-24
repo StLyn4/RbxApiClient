@@ -1,6 +1,6 @@
 <h1 align="center">Welcome to Roblox API Client 👋</h1>
 <p>
-  <img alt="Version" src="https://img.shields.io/badge/version-1.2.0-blue.svg?cacheSeconds=2592000" />
+  <img alt="Version" src="https://img.shields.io/badge/version-1.2.1-blue.svg?cacheSeconds=2592000" />
   <a href="https://github.com/StLyn4/RbxApiClient#tutorial" target="_blank">
     <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
   </a>
@@ -45,8 +45,9 @@ import createRBXClient from 'rbx-api-client';
 // Creation of a client, which will then be used to call API methods asynchronous
 // It takes a token string (.ROBLOSECURITY)
 // and a function that will be called if the token is outdated
+// (must return a new token and be asynchronous)
 // (the second argument is optional)
-const RBXClient = await createRBXClient(token, onTokenExpired);
+const RBXClient = await createRBXClient(token, refreshToken);
 
 /* ... */
 
