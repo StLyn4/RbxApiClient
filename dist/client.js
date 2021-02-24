@@ -6,11 +6,17 @@ const XCSRFEndpoint = 'https://auth.roblox.com/v2/logout';
 
 /**
  * returns configured axios instance
- * @param {string} token                     Authorization token (.ROBLOSECURITY)
- * @param {function():void} [onTokenExpired] Callback function that will be called in case of token expiration
- * @return {[AxiosInstance]}                 Will return the configured Axios instance
+ * @param {string}                     token          Authorization token (.ROBLOSECURITY)
+ * @param {function():Promise<string>} [refreshToken] Callback function that will be called in case of token expiration
+ * @return {[AxiosInstance]}                          Will return the configured Axios instance
  */
-const createClient = (token, onTokenExpired) => {
+const createClient = (token, refreshToken) => {
+  if (refreshToken && typeof(refreshToken) !== 'function') {
+    throw new Error(
+      'Callback "refreshToken" must be asynchronous functions that returns new tokens'
+    );
+  }
+
   // Attach an authorization token to every request
   const client = axios.create({
     headers: { Cookie: `.ROBLOSECURITY=${token};` },
@@ -28,8 +34,12 @@ const createClient = (token, onTokenExpired) => {
       // (for example, when logging into the application), or not.
       // In any case, a callback will be called if it exists
       if (err.response.status === 401) {
-        // Call callback if it exists
-        onTokenExpired && onTokenExpired();
+        if (refreshToken) {
+          return refreshToken().then(token => {
+            client.defaults.Cookie = `.ROBLOSECURITY=${token};`;
+            return client.request(err.config);
+          });
+        }
       // Updating X-CSRF token
       } else if (err.response.status === 403) {
         if (err.config.url !== XCSRFEndpoint) {

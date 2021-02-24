@@ -201,12 +201,12 @@ async function createIndex(apis) {
       class RbxApiClient {
         /**
          * [constructor description]
-         * @param {string} token                     Authorization token (.ROBLOSECURITY)
-         * @param {function():void} [onTokenExpired] Callback function that will be called in case of token expiration
+         * @param {string}                     token          Authorization token (.ROBLOSECURITY)
+         * @param {function():Promise<string>} [refreshToken] Callback function that will be called in case of token expiration
          */
-        constructor(token, onTokenExpired) {
+        constructor(token, refreshToken) {
           /** Configured Axios web client for direct API calls */
-          this.direct = createClient(token, onTokenExpired);
+          this.direct = createClient(token, refreshToken);
 
           /* APIs */
           ${Object.entries(apis).map(([name, data]) => {
@@ -229,12 +229,12 @@ async function createIndex(apis) {
 
       /**
        * class factory for RbxApiClient
-       * @param {string} token                     Authorization token (.ROBLOSECURITY)
-       * @param {function():void} [onTokenExpired] Callback function that will be called in case of token expiration
-       * @return {RbxApiClient}                    Will return an instance of the RbxApiClient class
+       * @param {string} token                              Authorization token (.ROBLOSECURITY)
+       * @param {function():Promise<string>} [refreshToken] Callback function that will be called in case of token expiration
+       * @return {RbxApiClient}                             Will return an instance of the RbxApiClient class
        */
-      const createRBXClient = async (token, onTokenExpired) => {
-        const RBXClient = new RbxApiClient(token, onTokenExpired);
+      const createRBXClient = async (token, refreshToken) => {
+        const RBXClient = new RbxApiClient(token, refreshToken);
         try {
           // Definition of ID and nickname.
           // It will also force you to re-login in case of incorrect tokens
@@ -242,7 +242,7 @@ async function createIndex(apis) {
           RBXClient.userID = userInfo.id;
           RBXClient.userName = userInfo.name;
         } catch (err) {
-          // onTokenExpired will be called automatically in case of 401 error
+          // refreshToken will be called automatically in case of 401 error
           if (!err.status !== 401) {
             throw err;
           }
