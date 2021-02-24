@@ -242,7 +242,7 @@ async function createIndex(apis) {
           RBXClient.userName = userInfo.name;
         } catch (err) {
           // onTokenExpired will be called automatically in case of 401 error
-          if (!err.response || err.response.status !== 401) {
+          if (!err.status !== 401) {
             throw err;
           }
         }

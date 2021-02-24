@@ -56,9 +56,9 @@ const createClient = (token, onTokenExpired) => {
     }
     const errors = err.response.data.errors;
     if (errors && errors.length) {
-      return Promise.reject(`${err.message}: ${errors[0].message}`);
+      err.message = `${err.message}: ${errors[0].message}`;
     }
-    return Promise.reject(err.message);
+    return Promise.reject(err);
   });
 
   return client;
